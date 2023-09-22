@@ -16,17 +16,14 @@ const getContactById = async (id) => {
 };
 
 const removeContact = async (id) => {
-  console.log('id: ', id);
-      const data = await listContacts();
-      console.log('data: ', data);
-      const index = data.findIndex((item) => item.id === id);
-      console.log('index: ', index);
-      if (index === -1) {
-        return null;
-      }
-      const [result] = data.splice(index, 1);
-      await fs.writeFile(contactsPath, JSON.stringify(data, null, 2));
-      return result;
+  const data = await listContacts();
+  const index = data.findIndex((item) => item.id === id);
+  if (index === -1) {
+    return null;
+  }
+  const [result] = data.splice(index, 1);
+  await fs.writeFile(contactsPath, JSON.stringify(data, null, 2));
+  return result;
 };
 
 const addContact = async ({ name, email, phone }) => {
@@ -43,10 +40,8 @@ const addContact = async ({ name, email, phone }) => {
 };
 
 const updateContact = async (id, body) => {
-  console.log('id: ', id);
   const data = await listContacts();
   const index = data.findIndex((item) => item.id === id);
-  console.log('index: ', index);
   if (index === -1) {
     return null;
   }
