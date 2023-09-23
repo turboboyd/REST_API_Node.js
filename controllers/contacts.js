@@ -1,8 +1,6 @@
 const contacts = require("../models/contacts");
 const { HttpError, ctrlWrapper } = require("../helpers/index");
 
-
-
 const getAllContacts = async (req, res) => {
   const result = await contacts.listContacts();
   res.json(result);
@@ -11,6 +9,7 @@ const getAllContacts = async (req, res) => {
 const getContact = async (req, res) => {
   const { contactId } = req.params;
   const result = await contacts.getContactById(contactId);
+  console.log('result: ', result);
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -18,7 +17,6 @@ const getContact = async (req, res) => {
 };
 
 const postContact = async (req, res) => {
-
   const result = await contacts.addContact(req.body);
   res.status(201).json(result);
 };
@@ -35,7 +33,6 @@ const deleteContact = async (req, res) => {
 };
 
 const putContact = async (req, res, next) => {
-
   const { contactId } = req.params;
   const result = await contacts.updateContact(contactId, req.body);
   if (!result) {
