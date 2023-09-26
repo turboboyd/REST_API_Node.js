@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const { handleMongooseError } = require("../helpers/index");
+const { handleMongooseError } = require("../helpers");
 
 const contactSchema = new Schema(
   {
@@ -43,13 +43,13 @@ const addSchema = Joi.object()
   .min(1)
   .message(addSchemaErrorMessages);
 
-// const updateFavoriteSchema = Joi.object({
-//   favorite: Joi.boolean().required(),
-// });
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+}).message({"message": "missing field favorite"});
 
 const schemas = {
   addSchema,
-  // updateFavoriteSchema,
+  updateFavoriteSchema,
 };
 
 module.exports = {
