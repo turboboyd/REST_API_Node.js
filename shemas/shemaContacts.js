@@ -1,24 +1,23 @@
 const Joi = require("joi");
 
-const addSchema = Joi.object({
-  name: Joi.string()
-    .messages({
-      "any.required": "missing required name field",
-    })
-    .required(),
-  email: Joi.string()
-    .email()
-    .messages({
-      "any.required": "missing required email field",
-    })
-    .required(),
-  phone: Joi.string()
-    .pattern(new RegExp("^[0-9+()\\-]*$"))
-    .messages({
-      "any.required": "missing required phone field",
-    })
-    .required(),
-});
+const addSchemaErrorMessages = {
+  "any.required": "missing required {{#label}} field",
+  "object.min": "missing fields",
+};
+
+const addSchema = Joi.object()
+  .when(Joi.object().min(1), {
+    then: Joi.object({
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      phone: Joi.string()
+        .pattern(new RegExp("^[0-9+()\\-]*$"))
+        .required()
+        ,
+    }),
+  })
+  .min(1)
+  .message( addSchemaErrorMessages);
 
 module.exports = {
   addSchema,
