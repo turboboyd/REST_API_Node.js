@@ -43,13 +43,15 @@ const addSchema = Joi.object()
   .min(1)
   .message(addSchemaErrorMessages);
 
-const updateFavoriteSchema = Joi.object({
-  favorite: Joi.boolean().required(),
-}).message({"message": "missing field favorite"});
+const updateStatusContactSchema = Joi.object({
+  favorite: Joi.boolean().required().messages({
+    "any.required": `missing field favorite`,
+  }),
+});
 
 const schemas = {
   addSchema,
-  updateFavoriteSchema,
+  updateStatusContactSchema,
 };
 
 module.exports = {
