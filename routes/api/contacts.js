@@ -6,7 +6,8 @@ const router = express.Router();
 
 const { validateBody } = require("../../middlewares");
 
-const schemas = require("../../shemas/shemaContacts.js");
+const schemas = require("../../models/contacts");
+
 
 router.get("/", ctrl.getAllContacts);
 
