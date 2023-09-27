@@ -4,7 +4,7 @@ const addSchemaErrorMessages = {
   "any.required": "missing required {{#label}} field",
   "string.email": "invalid {{#label}} format",
   "string.pattern.base":
-    "invalid {{#label}} format.{{#label}} format must: +380000000000 ",
+  "invalid {{#label}} format.{{#label}} format must: +380000000000 ",
   "object.min": "missing fields",
 };
 
