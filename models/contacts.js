@@ -44,6 +44,7 @@ const addSchema = Joi.object()
         .pattern(new RegExp("^[0-9+()\\-]*$"))
         .required()
         .label("Phone"),
+      favorite: Joi.boolean(),
     }),
   })
   .min(1)
