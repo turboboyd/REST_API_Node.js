@@ -6,13 +6,13 @@ const router = express.Router();
 
 const { validateBody, isValidId } = require("../../middlewares");
 
-const { schemas } = require("../../models/contact");
+const { schemas } = require("../../models/user");
 
 router.get("/", ctrl.getAllContacts);
 
 router.get("/:contactId", isValidId, ctrl.getContact);
 
-router.post("/", validateBody(schemas.addSchema), ctrl.postContact);
+router.post("/", validateBody(schemas.register), ctrl.postContact);
 
 router.delete("/:contactId", isValidId, ctrl.deleteContact);
 
