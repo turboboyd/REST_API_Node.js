@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
 const { handleMongooseError } = require("../helpers");
+const emailRegex = /^[0-9+()\\-]*$/;
 
 const contactSchema = new Schema(
   {
@@ -39,10 +40,7 @@ const addSchema = Joi.object()
     then: Joi.object({
       name: Joi.string().required().label("Name"),
       email: Joi.string().email().required().label("Email"),
-      phone: Joi.string()
-        .pattern(new RegExp("^[0-9+()\\-]*$"))
-        .required()
-        .label("Phone"),
+      phone: Joi.string().pattern(emailRegex).required().label("Phone"),
       favorite: Joi.boolean(),
     }),
   })
