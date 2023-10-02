@@ -8,11 +8,8 @@ const { HttpError, ctrlWrapper } = require("../helpers");
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
-  
   const { email, password } = req.body;
-  console.log('email: ', email);
   const user = await User.findOne({ email });
-    console.log("user: ", user);
   if (user) {
     throw HttpError(409, "Email in use");
   }
@@ -54,7 +51,25 @@ const login = async (req, res) => {
   });
 };
 
+const getCurrent = async (req, res) => {
+  console.log('req: ', req);
+  const { email, subscription } = req.user;
+  console.log('email: ', email);
+  console.log('subscription: ', subscription);
+  res.json({ email });
+};
+
+
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
+
+  res.status(204).json();
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  getCurrent: ctrlWrapper(getCurrent),
+  logout: ctrlWrapper(logout),
 };
