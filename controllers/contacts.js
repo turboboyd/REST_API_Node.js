@@ -3,16 +3,22 @@ const { HttpError, ctrlWrapper } = require("../helpers/index");
 
 const getAllContacts = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 20 } = req.query;
-  console.log('limit: ', limit);
-  console.log('page: ', page);
+  const { page = 1, limit = 20, favorite } = req.query;
   const skip = (page - 1) * limit;
-  const result = await Contact.find({ owner }, "-createdAt -updatedAt", {
+
+  const query = { owner };
+
+  if (favorite === "true") {
+    query.favorite = true;
+  }
+
+  const result = await Contact.find(query, "-createdAt -updatedAt", {
     skip,
     limit,
   }).populate("owner");
   res.json(result);
 };
+
 
 const getContact = async (req, res) => {
   const { contactId } = req.params;
@@ -27,10 +33,6 @@ const postContact = async (req, res) => {
   const { _id: owner } = req.user;
   const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
-  // const { _id: owner } = req.user;
-
-  // const result = await Contact.create({ ...req.body, owner });
-  // res.status(201).json(result);
 };
 
 const deleteContact = async (req, res) => {
