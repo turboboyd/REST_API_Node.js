@@ -8,17 +8,15 @@ const getAllContacts = async (req, res) => {
 
   const query = { owner };
 
-  if (favorite === "true") {
-    query.favorite = true;
+  if (favorite === "true" || favorite === "false") {
+    query.favorite = favorite === "true";
   }
-
   const result = await Contact.find(query, "-createdAt -updatedAt", {
     skip,
     limit,
   }).populate("owner");
   res.json(result);
 };
-
 
 const getContact = async (req, res) => {
   const { contactId } = req.params;
