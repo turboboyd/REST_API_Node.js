@@ -83,7 +83,7 @@ const subscriptionSchema = Joi.object({
     .required()
     .messages({
       "any.required": "Subscription is required",
-      "any.only": "Invalid subscription value",
+      "any.only": `Invalid subscription value. Should be "starter", "pro", "business"`,
     }),
 });
 
