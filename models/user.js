@@ -30,6 +30,10 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    avatarURL: {
+      type: String,
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -79,7 +83,7 @@ const subscriptionSchema = Joi.object({
     .required()
     .messages({
       "any.required": "Subscription is required",
-      "any.only": "Invalid subscription value",
+      "any.only": `Invalid subscription value. Should be "starter", "pro", "business"`,
     }),
 });
 
