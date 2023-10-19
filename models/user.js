@@ -34,9 +34,18 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
+
 
 userSchema.post("save", handleMongooseError);
 
@@ -52,6 +61,11 @@ const messagesPassword = {
   "string.pattern.base":
     "{#label} must contain at least 8 characters, including at least one lowercase letter, one uppercase letter, one digit, and one special character (@, $, !, %, *, ?, or &)",
 };
+
+const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegex).required().messages(messagesEmail),
+});
+
 
 const messagesRegisterSchema = { "object.min": "missing fields" };
 
@@ -91,6 +105,7 @@ const schemas = {
   registerSchema,
   loginSchema,
   subscriptionSchema,
+  emailSchema,
 };
 
 module.exports = {
